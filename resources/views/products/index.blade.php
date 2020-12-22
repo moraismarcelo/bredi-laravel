@@ -11,6 +11,7 @@
       <th scope="col">Nome</th>
       <th scope="col">Preço</th>
       <th scope="col">Categoria</th>
+      <th scope="col">Ação</th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +21,8 @@
       <td>{{$product->name}}</td>
       <td>{{$product->price}}</td>
       <td>{{$product->category->title}}</td>
+      <td><a href="/produtos/{{$product->id}}"><button type='button' class='btn btn-info btn-sm' id='editButton'>Detalhes</button></a>
+          <button type='button' class='btn btn-danger btn-sm deleteButton'>Excluir</button></td>
     </tr>
     @endforeach
   </tbody>

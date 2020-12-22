@@ -29,8 +29,9 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $product = new \App\Product();
         $categories = Category::all();
-        return view('products.create', compact('categories'));
+        return view('products.create', compact('categories','product'));
         
     }
 
@@ -61,7 +62,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = \App\Product::where('id',$id)->firstOrFail();
+        return view ('products.show', compact('product'));
     }
 
     /**
@@ -72,7 +74,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::all();
+        $product = \App\Product::where('id',$id)->firstOrFail();
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**
