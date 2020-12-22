@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Product as Product;
+use \App\Category as Category;
+
+
 
 class ProductController extends Controller
 {
@@ -13,7 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view ('products.index');
+        $products = Product::all();
+        $categories = Category::all();
+        return view ('products.index', compact('products', 'categories'));
     }
 
     /**
@@ -23,7 +29,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
+        
     }
 
     /**
@@ -32,9 +40,17 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $data)
     {
-        //
+        $data = request()->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'category_id' => 'required|numeric',
+        ]);
+        
+        \App\Product::create($data);    
+
+        return redirect()->route('produtos.index');
     }
 
     /**
