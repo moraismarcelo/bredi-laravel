@@ -18,5 +18,9 @@
   </div>
   <a href="{{route('produtos.index')}}"><button type='button' class='btn btn-info btn-sm'>Voltar</button></a>
   <a href="/produtos/{{$product->id}}/edit"><button type='button' class='btn btn-success btn-sm'>Editar</button></a>
-  <button type='button' class='btn btn-danger btn-sm'>Excluir</button>
+  <button type='submit' form="deleteForm"class='btn btn-danger btn-sm'>Excluir</button>
+  <form action="{{route('produtos.destroy',['id'=>$product->id])}}" method="POST" id="deleteForm">
+          @method('DELETE')
+          @csrf
+</form>
 @endsection

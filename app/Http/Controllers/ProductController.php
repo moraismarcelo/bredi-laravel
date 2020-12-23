@@ -43,13 +43,9 @@ class ProductController extends Controller
      */
     public function store(Request $data)
     {
-        $data = request()->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'category_id' => 'required|numeric',
-        ]);
         
-        \App\Product::create($data);    
+        
+        \App\Product::create($this->dataValidation());    
 
         return redirect()->route('produtos.index');
     }
@@ -88,7 +84,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->update($this->dataValidation());
+        return redirect('produtos/'.$id);
     }
 
     /**
@@ -99,6 +97,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::destroy($id);
+        return redirect('/');
+    }
+    private function dataValidation()
+    {
+        return request()->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'category_id' => 'required|numeric',
+        ]);
+        
     }
 }
